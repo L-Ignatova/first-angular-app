@@ -1,7 +1,4 @@
-import { Component } from '@angular/core';
-import { DUMMY_USERS } from '../dummy-users';
-
-// const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
+import { Component, computed, input, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -11,18 +8,27 @@ import { DUMMY_USERS } from '../dummy-users';
   styleUrl: './user.component.css',
 })
 export class UserComponent {
-  selectedUser = DUMMY_USERS[this.randomIndex];
+  // signal stores the state of a value and monitors
+  // all instances of the value in the app, updates app on change
+  // selectedUser = signal(DUMMY_USERS[this.randomIndex]);
+
+  // computed - smth like useMemo - changes when the
+  // signals used inside of it change
+  // not everytime the component or the app changes
+ 
+  @Input({required: true}) avatar!: string;
+  @Input({required: true}) name!: string;
+  // SIGNALS approach
+  // avatar = input.required<string>();
+  // name = input.required<string>();
+  // imagePath = computed(() => 'assets/users/' + this.avatar());
 
   onUserClick() {
-    console.log("clicked!");
-    this.selectedUser = DUMMY_USERS[this.randomIndex];
+    console.log('clicked!');
+    // this.selectedUser.set(DUMMY_USERS[this.randomIndex]);
   }
 
   get imagePath() {
-    return 'assets/users/' + this.selectedUser.avatar;
-  }
-
-  get randomIndex() {
-    return Math.floor(Math.random() * DUMMY_USERS.length);
+    return 'assets/users/' + this.avatar;
   }
 }
