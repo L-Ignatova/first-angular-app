@@ -4,12 +4,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-
-type User = {
-  id: string;
-  name: string;
-  avatar: string;
-};
+import { User } from './user.model';
 
 @Component({
   selector: 'app-user',
@@ -29,6 +24,7 @@ export class UserComponent {
   // not everytime the component or the app changes
 
   @Input({ required: true }) user!: User;
+  @Input({ required: true }) selected!: boolean;
   @Output() select = new EventEmitter<string>(); // emit custom values through SELECT to any parent component that is interested
 
   // SIGNALS approach

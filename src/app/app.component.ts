@@ -15,7 +15,7 @@ import { TasksComponent } from './tasks/tasks.component';
 export class AppComponent {
   users = DUMMY_USERS;
   title = 'first-angular-app';
-  selectedUserId = 'u1';
+  selectedUserId?: string;
 
   onSelectUser(id: string) {
     console.log('Selected user with id: ' + id);
