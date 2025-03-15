@@ -4,6 +4,7 @@ import { dummyTasks } from '../dummy-tasks';
 import { Task } from '../task/task.model';
 import { NewTaskComponent } from '../new-task/new-task.component';
 import { NewTask } from '../new-task/new-task.model';
+import { TasksService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -16,32 +17,20 @@ export class TasksComponent {
   @Input({ required: true }) name!: string;
 
   isAddingTask = false;
-  tasks = dummyTasks;
+
+
+  constructor(private tasksService: TasksService) {
+  };
 
   get selectedUserTasks(): Task[] {
-    return this.tasks.filter((task) => task.userId === this.userId);
-  }
-
-  onCompleteTask(id: string) {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
+    return this.tasksService.getUserTasks(this.userId);
   }
 
   onStartAddTask() {
     this.isAddingTask = true;
   }
 
-  onCancelAddTask() {
-    this.isAddingTask = false;
-  }
-
-  onAddNewTask(task: NewTask) {
-    this.tasks.push({
-      id: new Date().getTime().toString(),
-      title: task.title,
-      summary: task.summary,
-      dueDate: task.date,
-      userId: this.userId,
-    });
+  onCloseAddTask() {
     this.isAddingTask = false;
   }
 }
